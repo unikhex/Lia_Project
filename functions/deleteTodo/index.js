@@ -17,6 +17,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({ message: 'Task deleted successfully!' })
     };
   } catch (error) {
+    console.error('Error fetching tasks:', error); 
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Could not delete task' })

@@ -14,6 +14,7 @@ exports.handler = async () => {
       body: JSON.stringify(data.Items)
     };
   } catch (error) {
+    console.error('Error fetching tasks:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Could not fetch tasks' })

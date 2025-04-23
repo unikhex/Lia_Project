@@ -22,6 +22,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({ message: 'Task added successfully!' })
     };
   } catch (error) {
+    console.error('Error fetching tasks:', error); 
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Could not create task' })
