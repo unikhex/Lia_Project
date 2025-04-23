@@ -7,7 +7,7 @@ exports.handler = async (event) => {
     const data = JSON.parse(event.body);
 
     const params = {
-      TableName: 'ToDoTable',  // Replace with your DynamoDB table name
+      TableName: 'ToDoTable',  
       Item: {
         id: uuidv4(),           // Unique ID for the task
         task: data.task,        // Task from the client
