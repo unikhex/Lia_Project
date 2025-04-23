@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - pip install -g aws-sam-cli 
+      - pip install aws-sam-cli 
   build:
     commands:
       - sam build
