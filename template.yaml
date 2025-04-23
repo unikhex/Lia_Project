@@ -37,7 +37,7 @@ Resources:
     Properties:
       Handler: index.handler
       Runtime: nodejs18.x
-      CodeUri: functions/getTodos/
+      CodeUri: functions/getTodo
       MemorySize: 128
       Policies:
         - DynamoDBReadPolicy:
