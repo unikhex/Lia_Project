@@ -1,17 +1,72 @@
-version: 0.2
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Serverless To-Do List App
 
-phases:
-  install:
-    runtime-versions:
-      nodejs: 18
-    commands:
-      - npm install -g aws-sam-cli
-  build:
-    commands:
-      - sam build
-  post_build:
-    commands:
-      - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset \
-        --stack-name todo-app-stack \
-        --capabilities CAPABILITY_IAM \
-        --region eu-north-1
+Resources:
+  ToDoTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ToDoTable
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  CreateTodoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs18.x
+      CodeUri: functions/createTodo/
+      MemorySize: 128
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: ToDoTable
+      Events:
+        CreateTodoApi:
+          Type: Api
+          Properties:
+            Path: /todos
+            Method: POST
+
+  GetTodosFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs18.x
+      CodeUri: functions/getTodo
+      MemorySize: 128
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: ToDoTable
+      Events:
+        GetTodosApi:
+          Type: Api
+          Properties:
+            Path: /todos
+            Method: GET
+
+  DeleteTodoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs18.x
+      CodeUri: functions/deleteTodo/
+      MemorySize: 128
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: ToDoTable
+      Events:
+        DeleteTodoApi:
+          Type: Api
+          Properties:
+            Path: /todos/{id}
+            Method: DELETE
+
+Outputs:
+  ApiUrl:
+    Description: "API Gateway endpoint URL for To-Do app"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
