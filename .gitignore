@@ -1,0 +1,20 @@
+# Ignore AWS SAM build artifacts
+.aws-sam/
+
+# Ignore AWS credentials directory (if not already configured)
+.aws/
+
+# Ignore IDE settings
+.vscode/
+.idea/
+
+# Ignore node modules (for Node.js projects)
+node_modules/
+
+# Ignore any other OS-generated files like DS_Store, Thumbs.db
+.DS_Store
+Thumbs.db
+
+sam-installation
+
+sam-install.zip
