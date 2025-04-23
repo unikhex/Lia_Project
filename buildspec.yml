@@ -8,6 +8,7 @@ phases:
       - pip install aws-sam-cli 
   build:
     commands:
+      - sam validate
       - sam build
   post_build:
     commands:
@@ -16,4 +17,3 @@ phases:
 artifacts:
   files:
     - template.yaml
-    - '**/*'
